@@ -1,0 +1,64 @@
+version: '3'
+services:
+  node1:
+    image: ubuntu_update
+    container_name: node-1
+    volumes:
+      - ./shared:/shared
+    ports:
+      - 8888:8888
+      - 15000:15000
+    networks:
+      my_network:
+        aliases:
+          - node1
+  node2:
+    image: ubuntu_update
+    container_name: node-2
+    volumes:
+      - ./shared:/shared
+    ports:
+      - 8889:8888
+      - 15001:15000
+    networks:
+      my_network:
+        aliases:
+          - node2
+  node3:
+    image: ubuntu_update
+    container_name: node-3
+    volumes:
+      - ./shared:/shared
+    ports:
+      - 8890:8888
+      - 15002:15000
+    networks:
+      my_network:
+        aliases:
+          - node3
+  node4:
+    image: ubuntu_update
+    container_name: node-4
+    volumes:
+      - ./shared:/shared
+    ports:
+      - 8891:8888
+      - 15003:15000
+    networks:
+      my_network:
+        aliases:
+          - node4
+  node5:
+    image: ubuntu_update
+    container_name: node-5
+    volumes:
+      - ./shared:/shared
+    ports:
+      - 8892:8888
+      - 15004:15000
+    networks:
+      my_network:
+        aliases:
+          - node5
+networks:
+  my_network:
