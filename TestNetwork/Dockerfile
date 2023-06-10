@@ -24,5 +24,18 @@ COPY ./training/get_data.py /training/get_data.py
 RUN chmod +x /training/send_data.py
 RUN chmod +x /training/get_data.py
 
+WORKDIR /app
+
+# Install dependencies.
+ADD requirements.txt /app
+RUN cd /app && \
+    pip install -r requirements.txt
+
+# Add actual source code.
+ADD blockchain.py /app
+
+EXPOSE 5000
 EXPOSE 22 8888
+
 CMD ["/usr/sbin/sshd", "-D"]
+CMD ["python3", "blockchain.py", "--port", "5000"]
