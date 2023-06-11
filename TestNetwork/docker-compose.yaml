@@ -1,7 +1,7 @@
 version: '3'
 services:
   node1:
-    image: simple_node
+    image: ubuntu_update
     container_name: node-1
     volumes:
       - ./shared:/shared
@@ -14,7 +14,7 @@ services:
         aliases:
           - node1
   node2:
-    image: simple_node
+    image: ubuntu_update
     container_name: node-2
     volumes:
       - ./shared:/shared
@@ -27,7 +27,7 @@ services:
         aliases:
           - node2
   node3:
-    image: simple_node
+    image: ubuntu_update
     container_name: node-3
     volumes:
       - ./shared:/shared
@@ -40,7 +40,7 @@ services:
         aliases:
           - node3
   node4:
-    image: simple_node
+    image: ubuntu_update
     container_name: node-4
     volumes:
       - ./shared:/shared
@@ -53,7 +53,7 @@ services:
         aliases:
           - node4
   node5:
-    image: simple_node
+    image: ubuntu_update
     container_name: node-5
     volumes:
       - ./shared:/shared
