@@ -1,7 +1,7 @@
 version: '3'
 services:
   node1:
-    image: ubuntu_update
+    image: agent
     container_name: node-1
     volumes:
       - ./shared:/shared
@@ -13,8 +13,9 @@ services:
       my_network:
         aliases:
           - node1
+        ipv4_address: 192.168.1.1
   node2:
-    image: ubuntu_update
+    image: agent
     container_name: node-2
     volumes:
       - ./shared:/shared
@@ -26,8 +27,9 @@ services:
       my_network:
         aliases:
           - node2
+        ipv4_address: 192.168.1.2
   node3:
-    image: ubuntu_update
+    image: agent
     container_name: node-3
     volumes:
       - ./shared:/shared
@@ -39,8 +41,9 @@ services:
       my_network:
         aliases:
           - node3
+        ipv4_address: 192.168.1.3
   node4:
-    image: ubuntu_update
+    image: agent
     container_name: node-4
     volumes:
       - ./shared:/shared
@@ -52,8 +55,9 @@ services:
       my_network:
         aliases:
           - node4
+        ipv4_address: 192.168.1.4
   node5:
-    image: ubuntu_update
+    image: agent
     container_name: node-5
     volumes:
       - ./shared:/shared
@@ -65,5 +69,23 @@ services:
       my_network:
         aliases:
           - node5
+        ipv4_address: 192.168.1.5
+  aggregation_server:
+    image: server
+    container_name: aggregation_server
+    volumes:
+      - ./shared:/shared
+    ports:
+      - 8893:8888
+      - 85:5000
+      - 15005:15000
+    networks:
+      my_network:
+        aliases:
+          - aggregation_server
+        ipv4_address: 192.168.1.6
 networks:
   my_network:
+    ipam:
+      config:
+        - subnet: 192.168.0.0/16

@@ -1,0 +1,24 @@
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y \
+    openssh-server \
+    vim \
+    net-tools \
+    iputils-ping \
+    curl \
+    python3 \
+    python3-pip
+
+# Cài đặt các thư viện Python
+RUN pip3 install numpy matplotlib scikit-learn opencv-python-headless jupyter netifaces
+RUN pip3 install tensorflow
+RUN pip3 install keras
+
+RUN mkdir /app
+COPY ./start_fl.py /app
+COPY ./create_model_weights.py /app
+
+WORKDIR /app
+
+EXPOSE 5000
+
+CMD ["sh", "-c", "tail -f /dev/null"]

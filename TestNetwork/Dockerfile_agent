@@ -1,0 +1,28 @@
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y \
+    openssh-server \
+    vim \
+    net-tools \
+    iputils-ping \
+    curl \
+    python3 \
+    python3-pip
+
+# Cài đặt các thư viện Python
+RUN pip3 install numpy matplotlib scikit-learn opencv-python-headless jupyter netifaces
+RUN pip3 install tensorflow
+RUN pip3 install keras
+
+RUN mkdir /VisualPhish
+
+COPY ./VisualPhish /VisualPhish
+
+RUN mkdir /app
+COPY ./agent_listener.py /app
+COPY ./agent_train.py /app
+
+WORKDIR /app
+
+EXPOSE 5000
+
+CMD ["sh", "-c", "python3 /app/agent_listener.py"]

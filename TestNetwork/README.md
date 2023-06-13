@@ -1,7 +1,7 @@
 ## Step 1: Create docker image
 
 ```bash
-docker build -t ubuntu_update
+docker build -t ubuntu_update .
 ```
 
 ## Step 2: Create network
