@@ -92,6 +92,7 @@ services:
       - ./ssl/server_cert.pem:/servercert/server_cert.pem  # Mount specific client certificate and key
       - ./ssl/server_key.pem:/servercert/server_key.pem
       - ./ssl/root_cert.pem:/servercert/root_cert.pem
+      - ./send_ckks_key.py:/app/send_ckks_key.py
     ports:
       - 8893:8888
       - 85:5000
