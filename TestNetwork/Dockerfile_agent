@@ -21,10 +21,8 @@ RUN pip3 install numpy matplotlib scikit-learn tensorflow keras opencv-python-he
 RUN mkdir /app
 COPY ./agent_listener.py /app
 COPY ./agent_train.py /app
-COPY ./send_ckks_key.py /app/send_ckks_key.py
 COPY ./get_ckks_key.py /app/get_ckks_key.py
 
-RUN chmod +x /app/send_ckks_key.py
 RUN chmod +x /app/get_ckks_key.py
 
 WORKDIR /app
@@ -32,11 +30,6 @@ WORKDIR /app
 EXPOSE 5000 12345 22 8888
 
 RUN pip3 install tenseal
-#RUN pip3 install flask
-#RUN pip3 install requests
-
-ADD blockchain.py /app
 
 CMD ["/usr/sbin/sshd", "-D"]
 CMD ["sh", "-c", "python3 /app/agent_listener.py"]
-#CMD ["python3", "blockchain.py", "--port", "5000"]
