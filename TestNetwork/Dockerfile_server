@@ -23,13 +23,8 @@ COPY ./get_ckks_pubkey.py /app/get_ckks_pubkey.py
 WORKDIR /app
 
 RUN pip3 install tenseal
-#RUN pip3 install flask
-#RUN pip3 install requests
-
-ADD blockchain.py /app
 
 EXPOSE 5000 12345 22 8888
 
 CMD ["/usr/sbin/sshd", "-D"]
 CMD ["sh", "-c", "tail -f /dev/null"]
-#CMD ["python3", "blockchain.py", "--port", "5000"]
