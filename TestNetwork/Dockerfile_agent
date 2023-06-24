@@ -21,10 +21,8 @@ RUN pip3 install numpy matplotlib scikit-learn tensorflow keras opencv-python-he
 RUN mkdir /app
 COPY ./agent_listener.py /app
 COPY ./agent_train.py /app
-COPY ./send_ckks_key.py /app/send_ckks_key.py
 COPY ./get_ckks_key.py /app/get_ckks_key.py
 
-RUN chmod +x /app/send_ckks_key.py
 RUN chmod +x /app/get_ckks_key.py
 
 WORKDIR /app
