@@ -4,11 +4,14 @@ services:
     image: agent
     container_name: node-1
     volumes:
-      - ./shared:/shared
+      - ./ssl/client1_cert.pem:/clientkey/client_cert.pem  # Mount specific client certificate and key
+      - ./ssl/client1_key.pem:/clientkey/client_key.pem
+      - ./ssl/root_cert.pem:/clientkey/root_cert.pem
     ports:
       - 8888:8888
       - 80:5000
       - 15000:15000
+      - 12345:12345
     networks:
       my_network:
         aliases:
@@ -18,11 +21,14 @@ services:
     image: agent
     container_name: node-2
     volumes:
-      - ./shared:/shared
+      - ./ssl/client2_cert.pem:/clientkey/client_cert.pem  # Mount specific client certificate and key
+      - ./ssl/client2_key.pem:/clientkey/client_key.pem
+      - ./ssl/root_cert.pem:/clientkey/root_cert.pem
     ports:
       - 8889:8888
       - 81:5000
       - 15001:15000
+      - 12346:12345
     networks:
       my_network:
         aliases:
@@ -32,11 +38,14 @@ services:
     image: agent
     container_name: node-3
     volumes:
-      - ./shared:/shared
+      - ./ssl/client3_cert.pem:/clientkey/client_cert.pem  # Mount specific client certificate and key
+      - ./ssl/client3_key.pem:/clientkey/client_key.pem
+      - ./ssl/root_cert.pem:/clientkey/root_cert.pem
     ports:
       - 8890:8888
       - 82:5000
       - 15002:15000
+      - 12347:12345
     networks:
       my_network:
         aliases:
@@ -46,11 +55,14 @@ services:
     image: agent
     container_name: node-4
     volumes:
-      - ./shared:/shared
+      - ./ssl/client4_cert.pem:/clientkey/client_cert.pem  # Mount specific client certificate and key
+      - ./ssl/client4_key.pem:/clientkey/client_key.pem
+      - ./ssl/root_cert.pem:/clientkey/root_cert.pem
     ports:
       - 8891:8888
       - 83:5000
       - 15003:15000
+      - 12348:12345
     networks:
       my_network:
         aliases:
@@ -60,11 +72,14 @@ services:
     image: agent
     container_name: node-5
     volumes:
-      - ./shared:/shared
+      - ./ssl/client5_cert.pem:/clientkey/client_cert.pem  # Mount specific client certificate and key
+      - ./ssl/client5_key.pem:/clientkey/client_key.pem
+      - ./ssl/root_cert.pem:/clientkey/root_cert.pem
     ports:
       - 8892:8888
       - 84:5000
       - 15004:15000
+      - 12349:12345
     networks:
       my_network:
         aliases:
@@ -74,16 +89,35 @@ services:
     image: server
     container_name: aggregation_server
     volumes:
-      - ./shared:/shared
+      - ./ssl/server_cert.pem:/servercert/server_cert.pem  # Mount specific client certificate and key
+      - ./ssl/server_key.pem:/servercert/server_key.pem
+      - ./ssl/root_cert.pem:/servercert/root_cert.pem
     ports:
       - 8893:8888
       - 85:5000
       - 15005:15000
+      - 12350:12345
     networks:
       my_network:
         aliases:
           - aggregation_server
         ipv4_address: 192.168.1.6
+  key_generation_center:
+    image: agent
+    container_name: key_generation_center
+    volumes:
+      - ./shared:/shared
+      - ./ssl:/keys
+    ports:
+      - 8894:8888
+      - 86:5000
+      - 15006:15000
+      - 12351:12345
+    networks:
+      my_network:
+        aliases:
+          - aggregation_server
+        ipv4_address: 192.168.1.7
 networks:
   my_network:
     ipam:

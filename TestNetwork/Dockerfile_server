@@ -8,17 +8,28 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip
 
+RUN mkdir /var/run/sshd
+RUN echo 'root:21521955' | chpasswd
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
 # Cài đặt các thư viện Python
-RUN pip3 install numpy matplotlib scikit-learn opencv-python-headless jupyter netifaces
-RUN pip3 install tensorflow
-RUN pip3 install keras
+RUN pip3 install numpy matplotlib scikit-learn tensorflow keras opencv-python-headless jupyter netifaces
 
 RUN mkdir /app
 COPY ./start_fl.py /app
 COPY ./create_model_weights.py /app
+COPY ./get_ckks_pubkey.py /app/get_ckks_pubkey.py
 
 WORKDIR /app
 
-EXPOSE 5000
+RUN pip3 install tenseal
+#RUN pip3 install flask
+#RUN pip3 install requests
 
+ADD blockchain.py /app
+
+EXPOSE 5000 12345 22 8888
+
+CMD ["/usr/sbin/sshd", "-D"]
 CMD ["sh", "-c", "tail -f /dev/null"]
+#CMD ["python3", "blockchain.py", "--port", "5000"]

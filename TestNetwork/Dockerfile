@@ -15,19 +15,18 @@ RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/s
 # Cài đặt các thư viện Python
 RUN pip3 install numpy matplotlib scikit-learn tensorflow keras opencv-python-headless jupyter netifaces
 
-#RUN mkdir /VisualPhish
-#COPY ./VisualPhish /VisualPhish
+# Tạo thư mục "training" và sao chép các tệp tin vào container
+RUN mkdir /training
+COPY ./training/send_data.py /training/send_data.py
+COPY ./training/get_data.py /training/get_data.py
+COPY ./training/send_ckks_key.py /training/send_ckks_key.py
+COPY ./training/get_ckks_key.py /training/get_ckks_key.py
 
-RUN mkdir /app
-COPY ./agent_listener.py /app
-COPY ./agent_train.py /app
-COPY ./send_ckks_key.py /app/send_ckks_key.py
-COPY ./get_ckks_key.py /app/get_ckks_key.py
-
-RUN chmod +x /app/send_ckks_key.py
-RUN chmod +x /app/get_ckks_key.py
-
-WORKDIR /app
+# Thiết lập quyền thực thi cho các tệp tin
+RUN chmod +x /training/send_data.py
+RUN chmod +x /training/get_data.py
+RUN chmod +x /training/send_ckks_key.py
+RUN chmod +x /training/get_ckks_key.py
 
 EXPOSE 5000 12345 22 8888
 
@@ -35,8 +34,5 @@ RUN pip3 install tenseal
 #RUN pip3 install flask
 #RUN pip3 install requests
 
-ADD blockchain.py /app
-
 CMD ["/usr/sbin/sshd", "-D"]
-CMD ["sh", "-c", "python3 /app/agent_listener.py"]
 #CMD ["python3", "blockchain.py", "--port", "5000"]
